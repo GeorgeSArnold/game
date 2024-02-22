@@ -35,13 +35,22 @@ class RenderSystem extends System {
     }
 
     update = () => {
-        c.clearRect(0, 0, canvas.width, canvas.height)
-        c.beginPath();
-        c.fillStyle = "green"
-        c.fillRect(0, 0, 50, 50)
-        c.stroke();
-        //check
-        // console.log("Entities in RenderSystem:", this.entities);
+        for(let i = 0; i < this.entities.length; i++) {
+
+            const { Position } = this.entities[i].components;
+            const { x, y, width, height} = Position;
+
+            // clear 
+            c.clearRect(0, 0, canvas.width, canvas.height);
+            // draw
+            c.beginPath();
+            c.fillStyle = "green";
+            c.fillRect(x, y, width, height);
+            c.stroke();
+
+            //check
+            // console.log("Entities in RenderSystem:", this.entities);d            
+        }
     }
 }
 

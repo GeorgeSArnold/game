@@ -27,7 +27,7 @@ class Game {
 
         // init registry
         this.registry = new Registry();
-        Log.status("-> Registry...initialized")
+        Log.status("<- Registry...initialized")
     }
 
     // setup and load
@@ -41,7 +41,7 @@ class Game {
         // event listener > key-controlls wasd
         this.inputHandler = new InputHandler(this.player);
         Log.status("-> EventListener[keyup, keydown]...initialized");
-        Log.object("inputHandler:", this.inputHandler)
+        Log.object("<- inputHandler:", this.inputHandler)
 
         // registry > systems
         this.registry.addSystem("MovementSystem");
@@ -54,14 +54,19 @@ class Game {
         const dummyMoveComp = new MovementComponentModel("Movement", 0, 0);
         Log.status("-> MovementComponentModel Object...initialized")
         Log.object("<- dummy MoveComp;", dummyMoveComp)
-        const dummyPosComp = new PositionComponentModel("Position", 2, 0, 50, 50);
+        const dummyPosComp = new PositionComponentModel("Position", 0, 0, 50, 50);
         Log.status("-> PositionComponentModel Object...initialized")
         Log.object("<- dummy PositionComp;", dummyPosComp)
 
-        // create entity > registys
-        const entity = this.registry.createEntity([dummyMoveComp, dummyPosComp])
-        Log.status("-> entity > [dummyMoveComp, dummyPosComp]...created")
-        this.registry.addEntintyToSystem(entity);
+        // create entity > registry
+        this.player = this.registry.createEntity([dummyMoveComp, dummyPosComp])
+        Log.status("-> registry > player [dummyMoveComp, dummyPosComp]...created")
+        this.registry.addEntintyToSystem(this.player);
+
+        // init input handler
+        this.inputHandler = new InputHandler(this.player);
+        Log.status("-> EventListener[keyup, keydown]...initialized");
+        Log.object("<- inputHandler:", this.inputHandler);
     }
 
     // changing > values = position 
@@ -77,8 +82,6 @@ class Game {
 
     // display > changed values
     render = () => {
-        const { x, y, width, height } = this.player;
-
 
         // rec > loop
         requestAnimationFrame(this.render);
@@ -89,6 +92,3 @@ const game = new Game();
 game.initialize();
 game.update();
 game.render();
-
-
-

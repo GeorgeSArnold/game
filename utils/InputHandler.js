@@ -8,30 +8,54 @@ class InputHandler {
     handleUserInput(e) {
         const { key, type } = e;
 
-        if (this.player) {
+        if (this.player && this.player.components) {
+            let playerMovementComponent = this.player.components["Movement"];
+
             if (type === 'keydown') {
                 switch (key) {
                     // up
                     case "w":
-                        this.player.y -= 10
+                        playerMovementComponent.vY = -10;
                         break;
                     // down
                     case "s":
-                        this.player.y += 10
+                        playerMovementComponent.vY = 10;
                         break;
                     // left
                     case "a":
-                        this.player.x -= 10
+                        playerMovementComponent.vX = -10;
                         break;
                     // right
                     case "d":
-                        this.player.x += 10
+                        playerMovementComponent.vX = 10;
+                        break;
+                    default:
+                        break;
+                }
+            } else if (type === 'keyup') {
+                switch (key) {
+                    // up
+                    case "w":
+                        playerMovementComponent.vY = 0;
+                        break;
+                    // down
+                    case "s":
+                        playerMovementComponent.vY = 0;
+                        break;
+                    // left
+                    case "a":
+                        playerMovementComponent.vX = 0;
+                        break;
+                    // right
+                    case "d":
+                        playerMovementComponent.vX = 0;
                         break;
                     default:
                         break;
                 }
             }
         }
+
     }
 }
 
