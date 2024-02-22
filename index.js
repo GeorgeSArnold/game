@@ -1,11 +1,11 @@
-
 // imports
 import Registry from "./ecs/Registry.js";
 import Player from "./models/Player.js";
 import MovementComponentModel from "./models/MovementComponentModel.js";
 import PositionComponentModel from "./models/PositionComponentModel.js";
-
+// utils
 import Log from "./utils/Log.js";
+import InputHandler from "./utils/InputHandler.js";
 
 // init canvas
 const canvas = document.getElementById("gameScreen");
@@ -19,33 +19,34 @@ function setCanvasSize() {
 setCanvasSize();
 
 // // LOG
-Log.debug ("#LOG-STATUS:")
+Log.debug("#LOG-STATUS:")
 Log.status("canvas...initialized")
 Log.object("canvas object:", canvas)
 
 class Game {
     constructor() {
         this.player = undefined;
+        this.inputHandler = undefined;
         this.registry = new Registry();
     }
 
     // setup and load
     initialize = () => {
 
+        // player entitiy
+        this.player = new Player();
+        Log.status("<- player entity...initialized");
+        Log.object("<- Player Object: ", this.player)
+
+        // event listener > key-controlls wasd
+        this.inputHandler = new InputHandler(this.player);
+        Log.status("-> EventListener[keyup, keydown]...initialized");
+        Log.object("inputHandler:", this.inputHandler)
+
         // registry
         this.registry.addSystem("MovementSystem");
-        Log.status ("-> Registry...initialized")
+        Log.status("-> Registry...initialized")
         Log.object("<- systems objects > registry: ", this.registry.systems);
-    
-        // event listener
-        document.addEventListener('keyup', this.handleUserInput);
-        document.addEventListener('keydown', this.handleUserInput);
-        Log.status("-> EventListener[keyup, keydown]...initialized");
-
-        // player
-        this.player = new Player();
-        Log.status("-> Player Object...initialized");
-        Log.object("<- Player Object: ", this.player)  
 
         // models > dummys
         const dummyMoveComp = new MovementComponentModel("Movement", 0, 0);
@@ -83,34 +84,34 @@ class Game {
         requestAnimationFrame(this.render);
     }
 
-    handleUserInput = (e) => {
-        const { key, type } = e;
+    // handleUserInput = (e) => {
+    //     const { key, type } = e;
 
-        if (this.player) {
-            if (type === 'keydown') {
-                switch (key) {
-                    // up
-                    case "w":
-                        this.player.y -= 10
-                        break;
-                    // down
-                    case "s":
-                        this.player.y += 10
-                        break;
-                    // left
-                    case "a":
-                        this.player.x -= 10
-                        break;
-                    // right
-                    case "d":
-                        this.player.x += 10
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    }
+    //     if (this.player) {
+    //         if (type === 'keydown') {
+    //             switch (key) {
+    //                 // up
+    //                 case "w":
+    //                     this.player.y -= 10
+    //                     break;
+    //                 // down
+    //                 case "s":
+    //                     this.player.y += 10
+    //                     break;
+    //                 // left
+    //                 case "a":
+    //                     this.player.x -= 10
+    //                     break;
+    //                 // right
+    //                 case "d":
+    //                     this.player.x += 10
+    //                     break;
+    //                 default:
+    //                     break;
+    //             }
+    //         }
+    //     }
+    // }
 }
 
 const game = new Game();
