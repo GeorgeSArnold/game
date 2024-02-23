@@ -2,7 +2,7 @@
 import Registry from "./ecs/Registry.js";
 import Player from "./models/Player.js";
 
-// comps
+// models
 import MovementComponentModel from "./models/MovementComponentModel.js";
 import PositionComponentModel from "./models/PositionComponentModel.js";
 import SpriteComponentModel from "./models/SpriteComponentModel.js";
@@ -21,15 +21,19 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 // animations
-import { WARRIOR_ANIMATION } from "./models/animations/animation.js";
+import { MAGE_ANIMATION } from "../models/animations/MageAnimation.js";
 
 // LOG
 Log.debug("#LOG-STATUS:")
-Log.status("<- canvas...initialized")
-Log.object("canvas object:", canvas)
+// Log.status("<- canvas...initialized")
+// Log.object("canvas object:", canvas)
 
 class Game {
     constructor() {
+
+        // gametime
+        this.gameTime = Date.now();
+
         // player
         this.player = undefined;
 
@@ -40,6 +44,8 @@ class Game {
         // init registry
         this.registry = new Registry();
         Log.status("<- registry...initialized")
+
+
     }
 
     // setup and load
@@ -51,10 +57,14 @@ class Game {
         Log.object("Player Object: ", this.player)
 
         // registry > systems
+        Log.debug("#SYSTEMS")
         this.registry.addSystem("MovementSystem");
         Log.status("<- MovementSystem...initialized")
         this.registry.addSystem("RenderSystem");
         Log.status("<- RenderSystem...initialized")
+
+        this.registry.addSystem("AnimationSystem");
+        Log.status("<- AnimationSystem...initialized");
         Log.object("registry > systems: ", this.registry.systems);
 
         // models > dummys
@@ -76,12 +86,19 @@ class Game {
         Log.status("<- SpritSpriteComponentModel...initialized")
         Log.object("SpritSpriteComponentModel", dummySpriteComp)
 
-        // create entity > registry
-        this.player = this.registry.createEntity([dummyMoveComp, dummyPosComp, dummySpriteComp, dummySpriteComp])
-        Log.status("<- create entity: player > [dummyMoveComp, dummyPosComp]")
-        Log.object("Player:",this.player)
+        // create registry > entity > dummys, animation
+        this.player = this.registry.createEntity([
+            dummyMoveComp,
+            dummyPosComp,
+            dummySpriteComp,
+            MAGE_ANIMATION
+        ])
+
+        Log.status("<- MageAnimation...initialized")
+        Log.object("MageAnimation:", MAGE_ANIMATION)
+        Log.object("Player:", this.player)
         this.registry.addEntintyToSystem(this.player);
-        Log.status("<- addEntintyToSystem(this.player)");
+        Log.status("<- entity added > (this.player)");
 
         // input handler key, mouse
         Log.debug("#INPUT")
@@ -95,9 +112,13 @@ class Game {
 
     // changing > values = position 
     update = () => {
+        // time update
+        this.gameTime = Date.now();
+
         // udate systems
         this.registry.getSystem("MovementSystem").update();
         this.registry.getSystem("RenderSystem").update();
+        this.registry.getSystem("AnimationSystem").update(this.gameTime);
 
         // rec > loop  
         requestAnimationFrame(this.update);

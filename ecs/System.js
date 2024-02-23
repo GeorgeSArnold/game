@@ -23,11 +23,11 @@ class MovementSystem extends System {
                 const dy = entity.targetPosition.y - Position.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
 
-                if (distance < 5) { 
+                if (distance < 5) {
                     Movement.vX = 0;
                     Movement.vY = 0;
                     entity.targetPosition = undefined;
-                    continue; 
+                    continue;
                 }
             }
 
@@ -46,7 +46,7 @@ class RenderSystem extends System {
 
     update = () => {
         c.clearRect(0, 0, canvas.width, canvas.height);
-        for(let i = 0; i < this.entities.length; i++) {
+        for (let i = 0; i < this.entities.length; i++) {
 
             const { Position, Sprite } = this.entities[i].components;
             const { x, y, width, height } = Position;
@@ -57,7 +57,7 @@ class RenderSystem extends System {
             c.beginPath();
             // c.fillStyle = "green";
             // c.fillRect(x, y, width, height);
-            c.drawImage(sprite, sx, sy, sw, sh, x, y, width, height )
+            c.drawImage(sprite, sx, sy, sw, sh, x, y, width, height)
             c.stroke();
 
             //check
@@ -66,4 +66,30 @@ class RenderSystem extends System {
     }
 }
 
-export { MovementSystem, RenderSystem };
+class AnimationSystem extends System {
+    constructor(systemType) {
+        super(systemType);
+        this.componentRequirements = ["Position", "Sprite", "Animation"];
+    }
+    update = (gameTime) => {
+        for (let i = 0; i < this.entities.length; i++) {
+            const entity = this.entities[i];
+
+            const { facing, shouldAnimate } = entity.components["Animation"];
+
+            if (shouldAnimate) {
+                const currentFrame = Math.floor(
+                    (gameTime - entity.components["Animation"]["currentTimeOfAnimation"]) *
+                    entity.components["Animation"]["frames"][facing]["move"]["frameSpeedRate"] / 1000
+                ) % entity.components["Animation"]["frames"][facing]["move"]["numFrames"];
+
+                entity.components["Sprite"]["srcRect"] = entity.components["Animation"]["frames"][facing]["move"]["srcRect"][currentFrame];
+                entity.components["Animation"]["frames"][facing]["move"]["currentframe"] = currentFrame;
+            }
+
+
+        }
+    }
+}
+
+export { MovementSystem, RenderSystem, AnimationSystem };

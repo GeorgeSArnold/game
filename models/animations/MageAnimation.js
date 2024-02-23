@@ -1,4 +1,4 @@
-const WARRIOR_ANIMATION = {
+const MAGE_ANIMATION = {
     name: "Animation",
     value: {
         shouldAnimate: false,
@@ -184,4 +184,4 @@ const WARRIOR_ANIMATION = {
     }
 }
 
-export { WARRIOR_ANIMATION };
+export { MAGE_ANIMATION };
