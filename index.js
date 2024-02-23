@@ -12,13 +12,14 @@ import MouseInputHandler from "./utils/MouseInputHandler.js";
 // init canvas > export
 export const canvas = document.getElementById("gameScreen");
 export const c = canvas.getContext('2d');
+
 // fullscreen
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 // LOG
 Log.debug("#LOG-STATUS:")
-Log.status("canvas...initialized")
+Log.status("<- canvas...initialized")
 Log.object("canvas object:", canvas)
 
 class Game {
@@ -32,7 +33,7 @@ class Game {
 
         // init registry
         this.registry = new Registry();
-        Log.status("<- Registry...initialized")
+        Log.status("<- registry...initialized")
     }
 
     // setup and load
@@ -41,35 +42,35 @@ class Game {
         // player entitiy
         this.player = new Player();
         Log.status("<- player entity...initialized");
-        Log.object("<- Player Object: ", this.player)
+        Log.object("Player Object: ", this.player)
 
         // registry > systems
         this.registry.addSystem("MovementSystem");
-        Log.status("-> MovementSystem...initialized")
+        Log.status("<- MovementSystem...initialized")
         this.registry.addSystem("RenderSystem");
-        Log.status("-> RenderSystem...initialized")
-        Log.object("<- systems objects > registry: ", this.registry.systems);
+        Log.status("<- RenderSystem...initialized")
+        Log.object("registry > systems: ", this.registry.systems);
 
         // models > dummys
         const dummyMoveComp = new MovementComponentModel("Movement", 0, 0);
-        Log.status("-> MovementComponentModel Object...initialized")
-        Log.object("<- dummy MoveComp;", dummyMoveComp)
+        Log.status("<- MovementComponentModel Object...initialized")
+        Log.object("dummy MoveComp;", dummyMoveComp)
         const dummyPosComp = new PositionComponentModel("Position", 0, 0, 50, 50);
-        Log.status("-> PositionComponentModel Object...initialized")
-        Log.object("<- dummy PositionComp;", dummyPosComp)
+        Log.status("<- PositionComponentModel Object...initialized")
+        Log.object("dummy PositionComp;", dummyPosComp)
 
         // create entity > registry
         this.player = this.registry.createEntity([dummyMoveComp, dummyPosComp])
-        Log.status("-> registry > player [dummyMoveComp, dummyPosComp]...created")
+        Log.status("<- entity > dummys...created")
         this.registry.addEntintyToSystem(this.player);
 
         // input handler key, mouse
         this.keyInputHandler = new KeyInputHandler(this.player);
-        Log.status("-> keyInputHandler...initialized");
-        Log.object("<- inputHandler:", this.keyInputHandler);
+        Log.status("<- KeyInputHandler...initialized");
+        Log.object("KeyInputHandler:", this.keyInputHandler);
         this.mouseInputHandler = new MouseInputHandler(this.player);
-        Log.status("-> keyInputHandler...initialized");
-        Log.object("<- inputHandler:", this.mouseInputHandler);
+        Log.status("<- MouseInputHandler...initialized");
+        Log.object("mouseInputHandler:", this.mouseInputHandler);
     }
 
     // changing > values = position 

@@ -1,5 +1,4 @@
 import { canvas, c } from "../index.js"
-import Log from "../utils/Log.js";
 
 class System {
     constructor(systemType) {
@@ -18,7 +17,7 @@ class MovementSystem extends System {
             const entity = this.entities[i];
             let { Movement, Position } = entity.components;
 
-            // Überprüfe, ob die Einheit ihr Ziel erreicht hat
+            // check target
             if (entity.targetPosition) {
                 const dx = entity.targetPosition.x - Position.x;
                 const dy = entity.targetPosition.y - Position.y;
@@ -32,7 +31,7 @@ class MovementSystem extends System {
                 }
             }
 
-            // Normale Bewegungslogik
+            // default move
             Position.x += Movement.vX;
             Position.y += Movement.vY;
         }
@@ -53,6 +52,7 @@ class RenderSystem extends System {
 
             // clear 
             c.clearRect(0, 0, canvas.width, canvas.height);
+            
             // draw
             c.beginPath();
             c.fillStyle = "green";

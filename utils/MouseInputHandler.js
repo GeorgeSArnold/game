@@ -24,7 +24,7 @@ class MouseInputHandler {
         playerMovementComponent.vX = speed * Math.cos(angle);
         playerMovementComponent.vY = speed * Math.sin(angle);
 
-        // Setze ein Ziel, zu dem die Einheit gehen soll
+        // set position
         this.player.targetPosition = { x: mouseX, y: mouseY };
     }
 }
