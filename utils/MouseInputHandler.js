@@ -20,7 +20,7 @@ class MouseInputHandler {
 
         const angle = Math.atan2(distanceY, distanceX);
 
-        const speed = 5;
+        const speed = 10;
         playerMovementComponent.vX = speed * Math.cos(angle);
         playerMovementComponent.vY = speed * Math.sin(angle);
 

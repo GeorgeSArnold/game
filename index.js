@@ -20,6 +20,9 @@ export const c = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+// animations
+import { WARRIOR_ANIMATION } from "./models/animations/animation.js";
+
 // LOG
 Log.debug("#LOG-STATUS:")
 Log.status("<- canvas...initialized")
@@ -59,22 +62,22 @@ class Game {
         const dummyMoveComp = new MovementComponentModel("Movement", 0, 0);
         Log.status("<- MovementComponentModel Object...initialized")
         Log.object("dummy MoveComp;", dummyMoveComp)
-        const dummyPosComp = new PositionComponentModel("Position", 0, 0, 50, 50);
+        const dummyPosComp = new PositionComponentModel("Position", 0, 0, 120, 110);
         Log.status("<- PositionComponentModel Objectc")
         Log.object("dummy PositionComp;", dummyPosComp)
         const dummySpriteComp = new SpriteComponentModel(
             "Sprite",
-            "./assets/warrior.png",
+            "./assets/mage.png",
             0,
             0,
-            50,
-            50,
+            40,
+            33,
         )
         Log.status("<- SpritSpriteComponentModel...initialized")
         Log.object("SpritSpriteComponentModel", dummySpriteComp)
 
         // create entity > registry
-        this.player = this.registry.createEntity([dummyMoveComp, dummyPosComp])
+        this.player = this.registry.createEntity([dummyMoveComp, dummyPosComp, dummySpriteComp, dummySpriteComp])
         Log.status("<- create entity: player > [dummyMoveComp, dummyPosComp]")
         Log.object("Player:",this.player)
         this.registry.addEntintyToSystem(this.player);

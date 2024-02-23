@@ -29,7 +29,7 @@ class SpriteComponent extends Component {
     constructor(componentType, componentObj) {
         super (componentType);
         this.sprite = new Image();
-        this.path = componentObj.path;
+        this.sprite.src = componentObj.path;
         this.srcRect = componentObj.srcRect;
         /*
             {
@@ -43,4 +43,15 @@ class SpriteComponent extends Component {
     }
 }
 
-export { PositionComponent, MovementComponent, SpriteComponent };
+class AnimationComponent extends Component {
+    constructor(componentType, componentObj) {
+        super (componentType);
+        this.frames = componentObj.frames;
+
+
+        this.currentTimeOfAnimation = componentObj.currentTimeOfAnimation;
+
+    }
+}
+
+export { PositionComponent, MovementComponent, SpriteComponent, AnimationComponent };
