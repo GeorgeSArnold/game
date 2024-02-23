@@ -1,8 +1,11 @@
 // imports
 import Registry from "./ecs/Registry.js";
 import Player from "./models/Player.js";
+
+// comps
 import MovementComponentModel from "./models/MovementComponentModel.js";
 import PositionComponentModel from "./models/PositionComponentModel.js";
+import SpriteComponentModel from "./models/SpriteComponentModel.js";
 
 // utils
 import Log from "./utils/Log.js";
@@ -52,19 +55,33 @@ class Game {
         Log.object("registry > systems: ", this.registry.systems);
 
         // models > dummys
+        Log.debug("#COMPONENTS")
         const dummyMoveComp = new MovementComponentModel("Movement", 0, 0);
         Log.status("<- MovementComponentModel Object...initialized")
         Log.object("dummy MoveComp;", dummyMoveComp)
         const dummyPosComp = new PositionComponentModel("Position", 0, 0, 50, 50);
-        Log.status("<- PositionComponentModel Object...initialized")
+        Log.status("<- PositionComponentModel Objectc")
         Log.object("dummy PositionComp;", dummyPosComp)
+        const dummySpriteComp = new SpriteComponentModel(
+            "Sprite",
+            "./assets/warrior.png",
+            0,
+            0,
+            50,
+            50,
+        )
+        Log.status("<- SpritSpriteComponentModel...initialized")
+        Log.object("SpritSpriteComponentModel", dummySpriteComp)
 
         // create entity > registry
         this.player = this.registry.createEntity([dummyMoveComp, dummyPosComp])
-        Log.status("<- entity > dummys...created")
+        Log.status("<- create entity: player > [dummyMoveComp, dummyPosComp]")
+        Log.object("Player:",this.player)
         this.registry.addEntintyToSystem(this.player);
+        Log.status("<- addEntintyToSystem(this.player)");
 
         // input handler key, mouse
+        Log.debug("#INPUT")
         this.keyInputHandler = new KeyInputHandler(this.player);
         Log.status("<- KeyInputHandler...initialized");
         Log.object("KeyInputHandler:", this.keyInputHandler);
@@ -85,6 +102,7 @@ class Game {
 
     // display > changed values
     render = () => {
+
         // rec > loop
         requestAnimationFrame(this.render);
     }
