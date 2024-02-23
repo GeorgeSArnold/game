@@ -6,7 +6,8 @@ import PositionComponentModel from "./models/PositionComponentModel.js";
 
 // utils
 import Log from "./utils/Log.js";
-import InputHandler from "./utils/InputHandler.js";
+import KeyInputHandler from "./utils/KeyInputHandler.js";
+import MouseInputHandler from "./utils/MouseInputHandler.js";
 
 // init canvas > export
 export const canvas = document.getElementById("gameScreen");
@@ -15,15 +16,19 @@ export const c = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// // LOG
+// LOG
 Log.debug("#LOG-STATUS:")
 Log.status("canvas...initialized")
 Log.object("canvas object:", canvas)
 
 class Game {
     constructor() {
+        // player
         this.player = undefined;
-        this.inputHandler = undefined;
+
+        // handler
+        this.keyInputHandler = undefined;
+        this.mouseInputHandler = undefined;
 
         // init registry
         this.registry = new Registry();
@@ -37,11 +42,6 @@ class Game {
         this.player = new Player();
         Log.status("<- player entity...initialized");
         Log.object("<- Player Object: ", this.player)
-
-        // event listener > key-controlls wasd
-        this.inputHandler = new InputHandler(this.player);
-        Log.status("-> EventListener[keyup, keydown]...initialized");
-        Log.object("<- inputHandler:", this.inputHandler)
 
         // registry > systems
         this.registry.addSystem("MovementSystem");
@@ -63,15 +63,17 @@ class Game {
         Log.status("-> registry > player [dummyMoveComp, dummyPosComp]...created")
         this.registry.addEntintyToSystem(this.player);
 
-        // init input handler
-        this.inputHandler = new InputHandler(this.player);
-        Log.status("-> EventListener[keyup, keydown]...initialized");
-        Log.object("<- inputHandler:", this.inputHandler);
+        // input handler key, mouse
+        this.keyInputHandler = new KeyInputHandler(this.player);
+        Log.status("-> keyInputHandler...initialized");
+        Log.object("<- inputHandler:", this.keyInputHandler);
+        this.mouseInputHandler = new MouseInputHandler(this.player);
+        Log.status("-> keyInputHandler...initialized");
+        Log.object("<- inputHandler:", this.mouseInputHandler);
     }
 
     // changing > values = position 
     update = () => {
-
         // udate systems
         this.registry.getSystem("MovementSystem").update();
         this.registry.getSystem("RenderSystem").update();
@@ -82,7 +84,6 @@ class Game {
 
     // display > changed values
     render = () => {
-
         // rec > loop
         requestAnimationFrame(this.render);
     }
