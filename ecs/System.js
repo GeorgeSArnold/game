@@ -16,21 +16,25 @@ class MovementSystem extends System {
         for (let i = 0; i < this.entities.length; i++) {
             const entity = this.entities[i];
             let { Movement, Position } = entity.components;
-
+    
             // check target
             if (entity.targetPosition) {
                 const dx = entity.targetPosition.x - Position.x;
                 const dy = entity.targetPosition.y - Position.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
-
+    
                 if (distance < 5) {
                     Movement.vX = 0;
                     Movement.vY = 0;
                     entity.targetPosition = undefined;
+    
+                    // Hier die Animation stoppen
+                    entity.components["Animation"].shouldAnimate = false;
+    
                     continue;
                 }
             }
-
+    
             // default move
             Position.x += Movement.vX;
             Position.y += Movement.vY;

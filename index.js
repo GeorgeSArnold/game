@@ -25,12 +25,11 @@ import { MAGE_ANIMATION } from "../models/animations/MageAnimation.js";
 
 // LOG
 Log.debug("#LOG-STATUS:")
-// Log.status("<- canvas...initialized")
-// Log.object("canvas object:", canvas)
+Log.status("<- canvas...initialized")
+Log.object("canvas object:", canvas)
 
 class Game {
     constructor() {
-
         // gametime
         this.gameTime = Date.now();
 
@@ -44,8 +43,6 @@ class Game {
         // init registry
         this.registry = new Registry();
         Log.status("<- registry...initialized")
-
-
     }
 
     // setup and load
@@ -72,7 +69,7 @@ class Game {
         const dummyMoveComp = new MovementComponentModel("Movement", 0, 0);
         Log.status("<- MovementComponentModel Object...initialized")
         Log.object("dummy MoveComp;", dummyMoveComp)
-        const dummyPosComp = new PositionComponentModel("Position", 0, 0, 120, 110);
+        const dummyPosComp = new PositionComponentModel("Position", 0, 0, 100, 100);
         Log.status("<- PositionComponentModel Objectc")
         Log.object("dummy PositionComp;", dummyPosComp)
         const dummySpriteComp = new SpriteComponentModel(
@@ -80,8 +77,8 @@ class Game {
             "./assets/mage.png",
             0,
             0,
-            40,
-            33,
+            32,
+            32,
         )
         Log.status("<- SpritSpriteComponentModel...initialized")
         Log.object("SpritSpriteComponentModel", dummySpriteComp)

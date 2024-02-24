@@ -9,14 +9,14 @@ const MAGE_ANIMATION = {
                 move: {
                     srcRect: [
                         {
-                            x: -2,
+                            x: 28,
                             y: -1,
                             width: 40,
                             height: 25
                         },
                         {
-                            x: -1,
-                            y: 28,
+                            x: 28,
+                            y: 29,
                             width: 40,
                             height: 25
                         },

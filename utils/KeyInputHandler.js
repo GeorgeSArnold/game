@@ -1,32 +1,3 @@
-// class KeyInputHandler {
-//     constructor(player) {
-//         this.player = player;
-//         document.addEventListener('keydown', this.handleUserInput.bind(this));
-//         document.addEventListener('keyup', this.handleUserInput.bind(this));
-//     }
-
-//     handleUserInput(e) {
-//         const { key, type } = e;
-//         const playerMovementComponent = this.player?.components?.["Movement"];
-
-//         const playerAnimationComponent = this.player?.components?.["Animation"];
-//         console.log(playerAnimationComponent.facing)
-        
-//         if (playerMovementComponent) {
-//             switch (key) {
-//                 case "w": { playerAnimationComponent.shouldAnimate = true; playerAnimationComponent.facing ="up"; playerMovementComponent.vY } =  (type === 'keydown') {playerAnimationComponent.shouldAnimate = false;  ? -10 : 0; break; }
-//                 case "s": { playerAnimationComponent.shouldAnimate = true; playerAnimationComponent.facing ="down"; playerMovementComponent.vY = (type === 'keydown') ? 10 : 0; break; }
-//                 case "a": { playerAnimationComponent.shouldAnimate = true; playerAnimationComponent.facing ="left"; playerMovementComponent.vX = (type === 'keydown') ? -10 : 0; break; }
-//                 case "d": { playerAnimationComponent.shouldAnimate = true; playerAnimationComponent.facing ="right"; playerMovementComponent.vX = (type === 'keydown') ? 10 : 0; break; }
-//                 default: break;
-
-//             }
-//         }
-//     }
-// }
-
-// export default KeyInputHandler;
-
 class KeyInputHandler {
     constructor(player) {
         this.player = player;

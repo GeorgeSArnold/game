@@ -31,15 +31,6 @@ class SpriteComponent extends Component {
         this.sprite = new Image();
         this.sprite.src = componentObj.path;
         this.srcRect = componentObj.srcRect;
-        /*
-            {
-                x,
-                y,
-                width,
-                heigth
-            }
-        */
-
     }
 }
 
